@@ -5,15 +5,15 @@ class PoliticiansController < ApplicationController
 
 	def create
   		@pol = Politician.new(pol_params)
-  		respond_to do |format| 
+  		respond_to do |format|
 	 		if @pol.save
-	  			format.html { redirect_to pols_url, 
+	  			format.html { redirect_to pols_url,
 	  				notice: 'Politician was successfully created.' }
 	  			format.json {render json: @pol, status: created,
 	  				location: @pol}
 	  		else
 	  			format.html { render action: "new" }
-	  			format.json { render json: @pol.errors, 
+	  			format.json { render json: @pol.errors,
 	  				status: :unprocessable_entity }
 	  		end
 	  	end
@@ -29,8 +29,7 @@ class PoliticiansController < ApplicationController
 	end
 
 	def index
-		@pols = Politician.where(draft: false)
-		@pols = @pols.order('created_at DESC').paginate(:page => params[:page], :per_page => 3)
+		@pols = Politician.all
 	end
 
 	def edit
@@ -40,7 +39,7 @@ class PoliticiansController < ApplicationController
 	def update
 		@pol = Politician.find(params[:id])
 		if @pol.update(pol_params)
-			redirect_to admin_path 
+			redirect_to admin_path
 		else
 			render 'edit'
 		end

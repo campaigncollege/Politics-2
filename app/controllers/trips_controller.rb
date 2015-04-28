@@ -42,9 +42,10 @@ class TripsController < ApplicationController
 	end
 
 	def update
-		@pol = Politician.find(params[:id])
-		if @pol.update(pol_params)
-			redirect_to admin_path 
+		@pol = Politician.find(params[:politician_id])
+		@trip = @pol.trips.find(params[:id])
+		if @trip.update(trip_params)
+			redirect_to root_path 
 		else
 			render 'edit'
 		end
